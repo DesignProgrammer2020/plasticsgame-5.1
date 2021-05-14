@@ -174,10 +174,11 @@ function level1() {
   }
 
   push();
-  textSize(36);
+  textSize(24);
   fill(0);
   noStroke();
-  text(`points: ${points}`, width / 4, height * 0.15);
+  textAlign(CENTER);
+  text(`points:${points}`, width*0.15, height * 0.15);
 
   if (points >= 10) {
     state = 'you win';
@@ -188,7 +189,7 @@ function drawCreek() {
   //yellow-green background for grass
   background(100, 240, 0);
 
-  //brown rectangle and curves for mud
+  //brown rectangle and curves for creek bank
   fill(206, 154, 113);
 
   beginShape();
@@ -202,16 +203,15 @@ function drawCreek() {
   rectMode(CENTER);
   rect(width * 0.5, height * 0.9, width, height * 0.2);
 
-  drawTrees(200, 150);
-  drawTrees(400, 150);
-  drawTrees(600, 150);
+  drawTrees(300, 175);
+  drawTrees(500, 175);
   drawTrees(100, 300);
   drawTrees(300, 300);
   drawTrees(500, 300);
 
   push();
   //transparent cyan waves for water
-  fill(170, 295, 330, 80);
+  fill(170, 295, 330, 200);
   noStroke();
 
   //make the waves move
@@ -283,6 +283,8 @@ function drawTrees(x, y) {
   triangle(x, y - 60, x - 15, y + 60, x + 15, y + 60);
   //green circle for canopy
   fill(0, 120, 0);
+  circle(x-50, y-40, 70);
+  circle(x+50, y-40, 70);
   circle(x, y - 60, 100);
   pop();
 }
