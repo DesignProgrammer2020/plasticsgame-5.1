@@ -184,15 +184,12 @@ function drawCreek() {
   //brown rectangle for mud
   fill(206, 154, 113);
 
-  curveVertex();
   beginShape();
-  vertex(0, height * 0.8);
-  vertex(width * 0.2, height * 0.75);
-  vertex(width * 0.5, height * 0.8);
-  vertex(width * 0.8, height * 0.75);
-  vertex(width, height * 0.8);
-  // vertex(width, height);
-  // vertex(0, height);
+  curveVertex(0, height * 0.8);
+  curveVertex(width * 0.2, height * 0.75);
+  curveVertex(width * 0.5, height * 0.8);
+  curveVertex(width * 0.8, height * 0.75);
+  curveVertex(width, height * 0.8);
   endShape(CLOSE);
 
   rectMode(CENTER);
