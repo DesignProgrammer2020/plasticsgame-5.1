@@ -8,6 +8,7 @@ let w = 600;
 let h = 600;
 
 let trash = [];
+let flowers = [];
 let player;
 
 let playerImg;
@@ -24,7 +25,7 @@ let trashAnimation = [];
 //Earth Day everyday gif (null by default)
 let earthDayImage = null;
 
-let frameRate=1/100;
+// let frameRate=24;
 
 let yoff = 0.0; // 2nd dimension of perlin noise
 
@@ -69,6 +70,10 @@ function setup() {
   player.display();
 
   trash.push(new Trash());
+
+  for (let i=0; i<=19; i++){
+    flowers.push(new Flower());
+  }
 
 }
 
@@ -142,6 +147,10 @@ function level1() {
   // background(200, 200, 0);
   drawCreek();
 
+  for (let i=0; i<flowers.length; i++){
+    flowers[i].display();
+  }
+
   if (random(1) <= 0.01) {
     trash.push(new Trash());
   }
@@ -160,7 +169,7 @@ function level1() {
   for (let i = trash.length - 1; i >= 0; i--) {
     if (dist(player.x, player.y, trash[i].x, trash[i].y) <= (player.r + trash[i].r) / 2) {
       points++;
-      trash.splice(i, 1);const module = require('module');
+      trash.splice(i, 1);
     }
   }
 
@@ -178,8 +187,6 @@ function level1() {
 function drawCreek() {
   //yellow-green background for grass
   background(100, 240, 0);
-
-  drawFlowers();
 
   //brown rectangle for mud
   fill(206, 154, 113);
@@ -278,21 +285,4 @@ function drawTrees(x, y) {
   fill(0, 120, 0);
   circle(x, y - 60, 100);
   pop();
-}
-
-function drawFlowers(){
-  // frameRate(1);
-  //let frameRate = 5;
-  let flowerX = random(width);
-  let flowerY = random(height*0.55, height*0.7);
-  let petalSize = random(10, 20);
-
-  fill(random(255), random(255), random(255));
-  ellipse(flowerX - petalSize / 2, flowerY - petalSize / 2, petalSize);
-  ellipse(flowerX + petalSize / 2, flowerY - petalSize / 2, petalSize);
-  ellipse(flowerX - petalSize / 2, flowerY + petalSize / 2, petalSize);
-  ellipse(flowerX + petalSize / 2, flowerY + petalSize / 2, petalSize);
-
-  fill(random(255), random(255), random(255));
-  ellipse(flowerX, flowerY, petalSize);
 }
