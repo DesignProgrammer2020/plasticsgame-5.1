@@ -31,7 +31,7 @@ let yoff = 0.0; // 2nd dimension of perlin noise
 
 
 function preload() {
-  // //spritesheets
+  //spritesheets
   playerSS = loadImage('assets/collector.png');
   playerJSON = loadJSON('assets/collector.json');
   trashSS = loadImage('assets/bottle.png');
@@ -71,7 +71,7 @@ function setup() {
 
   trash.push(new Trash());
 
-  for (let i=0; i<=19; i++){
+  for (let i=0; i<10; i++){
     flowers.push(new Flower());
   }
 
@@ -188,7 +188,7 @@ function drawCreek() {
   //yellow-green background for grass
   background(100, 240, 0);
 
-  //brown rectangle for mud
+  //brown rectangle and curves for mud
   fill(206, 154, 113);
 
   beginShape();
