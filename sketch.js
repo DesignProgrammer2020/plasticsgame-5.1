@@ -24,6 +24,11 @@ let trashAnimation = [];
 //Earth Day everyday gif (null by default)
 let earthDayImage = null;
 
+let frameRate=1/100;
+
+let yoff = 0.0; // 2nd dimension of perlin noise
+
+
 function preload() {
   // //spritesheets
   playerSS = loadImage('assets/collector.png');
@@ -31,8 +36,6 @@ function preload() {
   trashSS = loadImage('assets/bottle.png');
   trashJSON = loadJSON('assets/bottle.json');
 }
-
-let yoff = 0.0; // 2nd dimension of perlin noise
 
 function setup() {
   var url = 'https://api.giphy.com/v1/gifs/search?&api_key=nqDlsVpOUw2qbCA0kd9jn43RdX07aU7Q&q=environment';
@@ -96,111 +99,6 @@ function draw() {
   }
 }
 
-function drawTrees() {
-  //add trees to the background
-  //let trees remain in same position for every game
-
-  //tree 1
-  push();
-  //brown triangle for trunk
-  noStroke();
-  fill(150, 100, 50);
-  triangle(50, 200, 35, 320, 65, 320);
-  //green circle for canopy
-  fill(0, 120, 0);
-  circle(50, 200, 100);
-  pop();
-
-  //tree 2
-  push();
-  translate(150, 0);
-  //brown triangle for trunk
-  noStroke();
-  fill(150, 100, 50);
-  triangle(50, 200, 35, 320, 65, 320);
-  //green circle for canopy
-  fill(0, 120, 0);
-  circle(50, 200, 100);
-  pop();
-
-  //tree 3
-  push();
-  translate(300, 0);
-  //brown triangle for trunk
-  noStroke();
-  fill(150, 100, 50);
-  triangle(50, 200, 35, 320, 65, 320);
-  //green circle for canopy
-  fill(0, 120, 0);
-  circle(50, 200, 100);
-  pop();
-
-  //tree 4
-  push();
-  translate(450, 0);
-  //brown triangle for trunk
-  noStroke();
-  fill(150, 100, 50);
-  triangle(50, 200, 35, 320, 65, 320);
-  //green circle for canopy
-  fill(0, 120, 0);
-  circle(50, 200, 100);
-  pop();
-}
-
-function drawCreek() {
-  //yellow-green background for grass
-  background(100, 240, 0);
-
-  //brown rectangle for mud
-  fill(206, 154, 113);
-
-  curveVertex();
-  beginShape();
-  vertex(0, height * 0.8);
-  vertex(width * 0.2, height * 0.75);
-  vertex(width * 0.5, height * 0.8);
-  vertex(width * 0.8, height * 0.75);
-  vertex(width, height * 0.8);
-  // vertex(width, height);
-  // vertex(0, height);
-  endShape(CLOSE);
-
-  rectMode(CENTER);
-  rect(width * 0.5, height * 0.9, width, height * 0.2);
-
-  drawTrees();
-
-  push();
-  //transparent cyan waves for water
-  fill(170, 295, 330, 80);
-  noStroke();
-
-  //make the waves move
-  //draw a polygon with wave points
-  beginShape();
-
-  let xoff = 0;
-
-  // Iterate over horizontal pixels
-  for (let x = 0; x <= width; x += 5) {
-    // Calculate a y value according to noise, map
-    //2D Noise
-    let y = map(noise(xoff, yoff), 0, 1, height * 0.95, height);
-    vertex(x, y);
-    // Increment x dimension for noise
-    xoff += 0.03;
-  }
-
-  // increment y dimension for noise
-  yoff += 0.03;
-  vertex(width, height);
-  vertex(0, height);
-  endShape(CLOSE);
-
-  pop();
-}
-
 function keyPressed() {
   if (keyCode == LEFT_ARROW) {
     player.direction = 'left';
@@ -262,7 +160,7 @@ function level1() {
   for (let i = trash.length - 1; i >= 0; i--) {
     if (dist(player.x, player.y, trash[i].x, trash[i].y) <= (player.r + trash[i].r) / 2) {
       points++;
-      trash.splice(i, 1);
+      trash.splice(i, 1);const module = require('module');
     }
   }
 
@@ -275,6 +173,66 @@ function level1() {
   if (points >= 10) {
     state = 'you win';
   }
+}
+
+function drawCreek() {
+  //yellow-green background for grass
+  background(100, 240, 0);
+
+  drawFlowers();
+
+  //brown rectangle for mud
+  fill(206, 154, 113);
+
+  curveVertex();
+  beginShape();
+  vertex(0, height * 0.8);
+  vertex(width * 0.2, height * 0.75);
+  vertex(width * 0.5, height * 0.8);
+  vertex(width * 0.8, height * 0.75);
+  vertex(width, height * 0.8);
+  // vertex(width, height);
+  // vertex(0, height);
+  endShape(CLOSE);
+
+  rectMode(CENTER);
+  rect(width * 0.5, height * 0.9, width, height * 0.2);
+
+  drawTrees(200, 150);
+  drawTrees(400, 150);
+  drawTrees(600, 150);
+  drawTrees(100, 300);
+  drawTrees(300, 300);
+  drawTrees(500, 300);
+
+  push();
+  //transparent cyan waves for water
+  fill(170, 295, 330, 80);
+  noStroke();
+
+  //make the waves move
+  //draw a polygon with wave points
+  beginShape();
+
+  let xoff = 0;
+
+  // Iterate over horizontal pixels
+  for (let x = 0; x <= width; x += 5) {
+    // Calculate a y value according to noise, map
+    //2D Noise
+    let y = map(noise(xoff, yoff), 0, 1, height * 0.95, height);
+    vertex(x, y);
+    // Increment x dimension for noise
+    xoff += 0.03;
+  }
+
+  // increment y dimension for noise
+  yoff += 0.03;
+  vertex(width, height);
+  vertex(0, height);
+  endShape(CLOSE);
+
+  pop();
 }
 
 function level1MouseClicked() {}
@@ -301,4 +259,43 @@ function youWinMouseClicked() {
   clear();
   state = 'title';
   points = 0;
+}
+
+function drawTrees(x, y) {
+  //add trees to the background
+  //let trees remain in same position for every game
+
+  push();
+  //scale of trees
+  if (y < height * 0.5) {
+    scale(0.75);
+  } else {
+    scale(1);
+  }
+
+  //brown triangle for trunk
+  noStroke();
+  fill(150, 100, 50);
+  triangle(x, y - 60, x - 15, y + 60, x + 15, y + 60);
+  //green circle for canopy
+  fill(0, 120, 0);
+  circle(x, y - 60, 100);
+  pop();
+}
+
+function drawFlowers(){
+  // frameRate(1);
+  //let frameRate = 5;
+  let flowerX = random(width);
+  let flowerY = random(height*0.55, height*0.7);
+  let petalSize = random(10, 20);
+
+  fill(random(255), random(255), random(255));
+  ellipse(flowerX - petalSize / 2, flowerY - petalSize / 2, petalSize);
+  ellipse(flowerX + petalSize / 2, flowerY - petalSize / 2, petalSize);
+  ellipse(flowerX - petalSize / 2, flowerY + petalSize / 2, petalSize);
+  ellipse(flowerX + petalSize / 2, flowerY + petalSize / 2, petalSize);
+
+  fill(random(255), random(255), random(255));
+  ellipse(flowerX, flowerY, petalSize);
 }

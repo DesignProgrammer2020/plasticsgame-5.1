@@ -1,7 +1,7 @@
 class Player {
   constructor(){
     //default x position
-    this.r = 60;
+    this.r = 100;
     this.x = w/2;
     //default y position
     this.y = height*0.5;

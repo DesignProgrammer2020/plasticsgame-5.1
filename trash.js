@@ -2,7 +2,7 @@ class Trash {
   constructor(){
     this.r = 50;
     this.x = 0 - this.r;
-    this.y = random(400, 500);
+    this.y = random(450, height-this.r);
   }
 
   display(){
